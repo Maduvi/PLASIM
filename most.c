@@ -1778,6 +1778,9 @@ int WriteRunScript(int model)
    fprintf(fp,"[ $# == 1 ] && cd $1\n");
    fprintf(fp,"rm -f %s_restart\n",ShortModelName[model]);
    fputs("rm -f Abort_Message\n",fp);
+   fprintf(fp,"! [ -d runs ] && mkdir runs\n");
+   fprintf(fp,"! [ -d diag ] && mkdir diag\n");
+   fprintf(fp,"! [ -d rest ] && mkdir rest\n");
    fputs("YEAR=0\n",fp);
    fprintf(fp,"YEARS=%d\n",SimYears);
    if (Multirun > 1) fprintf(fp,"INSTANCES=%d\n",Multirun);
@@ -1787,9 +1790,9 @@ int WriteRunScript(int model)
    if (ngui) fputs("# ",fp); /* deactivate loop for GUI case */
    fputs("do\n",fp);
    fputs("   YEAR=`expr $YEAR + 1`\n",fp);
-   fputs("   DATANAME=`printf '%s.%03d' $EXP $YEAR`\n",fp);
-   fputs("   DIAGNAME=`printf '%s_DIAG.%03d' $EXP $YEAR`\n",fp);
-   fputs("   RESTNAME=`printf '%s_REST.%03d' $EXP $YEAR`\n",fp);
+   fputs("   DATANAME=`printf 'runs/%s.%03d' $EXP $YEAR`\n",fp);
+   fputs("   DIAGNAME=`printf 'diag/%s_DIAG.%03d' $EXP $YEAR`\n",fp);
+   fputs("   RESTNAME=`printf 'rest/%s_REST.%03d' $EXP $YEAR`\n",fp);
    if (porm < 2)
    {
       fprintf(fp,"   ./%s\n",exec_name);
