@@ -1,0 +1,10 @@
+## Ignore some compilation products
+F90_INTEGER
+F90_REAL
+*.x
+makefile
+most_compiler
+most_compiler_mpi
+most_debug_options
+most_info.txt
+most_last_used.cfg
