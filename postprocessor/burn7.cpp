@@ -961,7 +961,9 @@ void NetOpen(char *NetFileName)
 void NetVarDefine(void)
 {
    int jvar;
-
+   float fFillValue = -32767.0;
+   double dFillValue = -32767.0;
+    
    for (jvar = 0 ; jvar < CODES ; ++jvar)
    if (All[jvar].selected)
    {
@@ -985,6 +987,18 @@ void NetVarDefine(void)
       All[jvar].NetVar->add_att("code"         ,    jvar    );
       if (GaussianOutput)
       All[jvar].NetVar->add_att("grid_type"    ,"gaussian"  );
+      {
+      if (RealSize == 8)
+	All[jvar].NetVar->add_att("_FillValue"   ,dFillValue);
+      else
+	All[jvar].NetVar->add_att("_FillValue"   ,fFillValue);
+      }
+      {
+      if (RealSize == 8)
+	All[jvar].NetVar->add_att("missing_value"   ,dFillValue);
+      else
+	All[jvar].NetVar->add_att("missing_value"   ,fFillValue);
+      }
    }
 }
 
